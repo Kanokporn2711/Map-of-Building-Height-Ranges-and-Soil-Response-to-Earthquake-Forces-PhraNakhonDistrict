@@ -18,7 +18,7 @@
             padding: 0;
             margin: 0;
         }
-        /* ─── 1. สไตล์ควบคุมหน้าต่างด้านขวา (Sidebar) ─── */
+		/* ─── 1. สไตล์ควบคุมหน้าต่างด้านขวา (Sidebar) ─── */
 #sidebar-info {
     width: 320px !important;
     height: 100vh !important;
@@ -89,7 +89,7 @@
 .leaflet-popup-close-button { color: #ffffff !important; padding: 0 !important; font-size: 16px !important; top: 11px !important; right: 15px !important; z-index: 99999 !important; line-height: 1 !important; }
 .leaflet-popup-close-button:hover { color: #feb2b2 !important; background: none !important; }
 .leaflet-popup-tip-container { display: none !important; }
-		</style>
+        </style>
         <title></title>
     </head>
     <body>
@@ -110,9 +110,9 @@
         <script>
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[13.73540516492595,100.46808996531288],[13.77659047243328,100.52916216266193]]);
+        }).fitBounds([[13.735966981144283,100.4680934627808],[13.776028642434564,100.5291585087502]]);
         var hash = new L.Hash(map);
-        map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         // remove popup's row if "visible-with-data"
         function removeEmptyRowsFromPopupContent(content, feature) {
@@ -137,20 +137,9 @@
                 var src = imgTd.getAttribute('src');
                 if (/\.(jpg|jpeg|png|gif|bmp|webp|avif)$/i.test(src)) {
                     popup._contentNode.classList.add('media');
-                    var img = popup._contentNode.querySelector('td img');
-                    if (img) {
-                        // If already loaded (cache), update immediately
-                        if (img.complete && img.naturalHeight > 0) {
-                            popup.update();
-                        } else {
-                            img.addEventListener('load', function() {
-                                popup.update();
-                            });
-                            img.addEventListener('error', function() {
-                                popup.update();
-                            });
-                        }
-                    }
+                    setTimeout(function() {
+                        popup.update();
+                    }, 10);
                 } else if (/\.(mp3|wav|ogg|aac)$/i.test(src)) {
                     var audio = document.createElement('audio');
                     audio.controls = true;
@@ -208,16 +197,19 @@
         function pop_PhraNakhon_1(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(String(feature.properties['OBJECTID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">OBJECTID</th>\
+                        <td>' + (feature.properties['OBJECTID'] !== null ? autolinker.link(String(feature.properties['OBJECTID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['BLDG_ID'] !== null ? autolinker.link(String(feature.properties['BLDG_ID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">BLDG_ID</th>\
+                        <td>' + (feature.properties['BLDG_ID'] !== null ? autolinker.link(String(feature.properties['BLDG_ID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['BL_HEIGHT'] !== null ? autolinker.link(String(feature.properties['BL_HEIGHT']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['BL_DEPTH'] !== null ? autolinker.link(String(feature.properties['BL_DEPTH']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <th scope="row">BL_DEPTH</th>\
+                        <td>' + (feature.properties['BL_DEPTH'] !== null ? autolinker.link(String(feature.properties['BL_DEPTH']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['BL_NSTOREY'] !== null ? autolinker.link(String(feature.properties['BL_NSTOREY']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
@@ -340,7 +332,7 @@
         bounds_group.addLayer(layer_PhraNakhon_1);
         map.addLayer(layer_PhraNakhon_1);
         var overlaysTree = [
-            {label: 'PhraNakhon<br /><table><tr><td style="text-align: center;"><img src="legend/PhraNakhon_1_0300.png" /></td><td>0 - 30</td></tr><tr><td style="text-align: center;"><img src="legend/PhraNakhon_1_30601.png" /></td><td>30 - 60</td></tr><tr><td style="text-align: center;"><img src="legend/PhraNakhon_1_604002.png" /></td><td>60 - 400</td></tr></table>', layer: layer_PhraNakhon_1},
+            {label: 'PhraNakhon<br /><table><tr><td style="text-align: center;"><img src="legend/PhraNakhon_1_0300.png" /></td><td>0 - 30</td></tr><tr><td style="text-align: center;"><img src="legend/PhraNakhon_1_50801.png" /></td><td>50-80</td></tr><tr><td style="text-align: center;"><img src="legend/PhraNakhon_1_804002.png" /></td><td>80-400</td></tr></table>', layer: layer_PhraNakhon_1},
             {label: "Google Satellite 2026", layer: layer_GoogleSatellite2026_0},]
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
@@ -403,16 +395,17 @@
             }  
         });       
         setBounds();
-        </script>        
+        </script>  
+    </script>        
     
 	    <!-- ชิ้นส่วนหน้าต่างรายละเอียดงานฝั่งขวา และสคริปต์เปิดดูรูปภาพในหมุดแดง -->
     <div id="sidebar-info">
         <button id="toggle-btn" onclick="toggleSidebar(event)">❯</button>
-        <h1>แผนที่ช่วงความสูงอาคารกับการตอบสนองของชั้นดินจากแรงแผ่นดินไหว (เขตพระนคร)</h1>
+        <h1>แผนที่ช่วงความสูงอาคารกับการตอบสนองของชั้นดินจากแรงแผ่นดินไหว (เขตดินแดง)</h1>
         <hr>
         <p><strong>รายละเอียดงาน:<br>
-			</strong> สีเขียว <span style="color: green; font-size: 16px;">■</span> ความสูงอาคารที่ 'ไม่อยู่' ในช่วงการสั่นพ้องกับชั้นดินจากแรงแผ่นดินไหว<br>
-			</strong> สีแดง <span style="color: red; font-size: 16px;">■</span> ความสูงอาคารที่ 'อยู่' ในช่วงการสั่นพ้องกับชั้นดินจากแรงแผ่นดินไหว (เฝ้าระวัง)<br>
+			</strong> สีเขียว <span style="color: green; font-size: 16px;">■</span> ความสูงอาคารที่ <strong style="color:#16a34a;">ไม่อยู่</strong> ในช่วงการสั่นพ้องกับชั้นดินจากแรงแผ่นดินไหว<br>
+			</strong> สีแดง <span style="color: red; font-size: 16px;">■</span> ความสูงอาคารที่ <strong style="color:#dc2626;">อยู่</strong> ในช่วงการสั่นพ้องกับชั้นดินจากแรงแผ่นดินไหว <strong style="color:#dc2626;">เฝ้าระวัง</strong><br>
         </ul>
         </p>
     </div>
@@ -450,6 +443,5 @@
         });
     });
     </script>
-		</script>        
-    </body>
+	</body>
 </html>
